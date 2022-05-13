@@ -32,7 +32,7 @@ const getSearchInput = () => {
 
 const updateGridImages = (images) => {
     $(".grid-container div").each((i, e) => {
-        $( e ).css("background", 'url("' + images.results[i].urls.regular + '") center center').attr("data-num", i);
+        $( e ).css("background", 'url("' + images.results[i].urls.small + '") center center / cover no-repeat').attr("data-num", i);
     });
 }
 

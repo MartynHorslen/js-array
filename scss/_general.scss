@@ -32,7 +32,7 @@ body {
     position: absolute;
 }
 
-.header, form {
+.header, .footer, form {
     background-color: rgba(0,0,0,0.75);
     padding: 20px 30px;
     width: 100%;
@@ -86,4 +86,16 @@ body {
     &:hover {
         filter:brightness(50%);
     }
+}
+
+.title, .buttons {
+    display: none; 
+    position: absolute;
+}
+.title {
+    top: 50px;
+}
+
+.buttons {
+    bottom: 10px;
 }

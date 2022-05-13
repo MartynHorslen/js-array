@@ -68,13 +68,16 @@ $(".grid-container div").click((e) => {
     });
 
     // Expand it to full screen
-    $(".full-image").animate({
+    $(".full-image").delay(200).animate({
         width: "100vw",
         height: "100vh",
         left: "0",
         top: "0",
         opacity: "1"
-    }, 1000, "linear", () => {
+    }, 1000, () => {
+        $(".full-image").html('<div class="header title"><h1>Title</h1></div><div class="footer buttons"><h1>Buttons</h1></div>');
+        $(".title").fadeIn("slow");
+        $(".buttons").fadeIn("slow");
         animation = false;
     });
 });
@@ -83,9 +86,11 @@ $(".grid-container div").click((e) => {
 /************* Hide Full Grid Image ****************/
 /***************************************************/
 
-$(".full-image").click(() => {
+$(".full-image").click(async () => {
     if (animation) return;
     animation = true;
+    $(".title").fadeOut("slow");
+    await $(".buttons").fadeOut("slow");
     $(".full-image").animate({
         top: item.top - 1,
         left: item.left - 1,
