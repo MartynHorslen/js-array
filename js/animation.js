@@ -44,6 +44,7 @@ $(".search-arrow").click((e) => {
 /***************************************************/
 let item;
 $(".grid-container div").click((e) => {
+    console.log(e);
     if (animation) return;
     animation = true;
     // Store the positional information of the targeted image.
@@ -75,9 +76,11 @@ $(".grid-container div").click((e) => {
         top: "0",
         opacity: "1"
     }, 1000, () => {
-        $(".full-image").html('<div class="header title"><h1>Title</h1></div><div class="footer buttons"><h1>Buttons</h1></div>');
+        let description = gridImages.results[item.id].description || "Image";
+        let name = `by ${gridImages.results[item.id].user.name}` || "";
+        $(".title").html(`<h1>${description} ${name}</h1>`);
         $(".title").fadeIn("slow");
-        $(".buttons").fadeIn("slow");
+        $(".footer").fadeIn("slow");
         animation = false;
     });
 });
@@ -90,7 +93,7 @@ $(".full-image").click(async () => {
     if (animation) return;
     animation = true;
     $(".title").fadeOut("slow");
-    await $(".buttons").fadeOut("slow");
+    await $(".footer").fadeOut("slow");
     $(".full-image").animate({
         top: item.top - 1,
         left: item.left - 1,

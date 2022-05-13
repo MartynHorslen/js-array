@@ -24,12 +24,13 @@ body {
 
 .overlay {
     width: 100vw;
-    height: 100vh;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
 }
 
 .header, .footer, form {
@@ -88,14 +89,27 @@ body {
     }
 }
 
-.title, .buttons {
+.title, .footer {
     display: none; 
     position: absolute;
 }
-.title {
+.header {
     top: 50px;
 }
 
-.buttons {
+.footer {
     bottom: 10px;
+}
+.buttons {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+}
+
+@media (min-width: 576px){
+    .overlay {
+        height: 100vh;
+        top: 0;
+        transform: translateY(0);
+    }
 }
