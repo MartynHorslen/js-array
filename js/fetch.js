@@ -17,7 +17,6 @@ const getImage = async (search, page) => {
         return;
     } else {
         let json = await res.json();
-        console.log(json);
         return json;
     }
 };

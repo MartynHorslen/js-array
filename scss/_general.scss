@@ -31,9 +31,10 @@ body {
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
+    z-index: 20;
 }
 
-.header, .footer, form {
+.search, form {
     background-color: rgba(0,0,0,0.75);
     padding: 20px 30px;
     width: 100%;
@@ -84,8 +85,23 @@ body {
 }
 
 .hover {
+    display: flex;
+    justify-content: center;
+    align-items: center;
     &:hover {
         filter:brightness(50%);
+    }
+    h3 {
+        display: none;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translateY(-50%) translateX(-50%);
+        color: white;
+    }
+    &:hover h3 {
+        display: block;
+        filter:brightness(200%);
     }
 }
 
@@ -93,8 +109,35 @@ body {
     display: none; 
     position: absolute;
 }
+
+.header, .footer{
+    background-color: rgba(0,0,0,0.75);
+    padding: 15px 30px;
+    width: 100%;
+    text-align: center;
+    color: white;
+    text-align: center;
+    h1, h2, h3, p {
+        padding-bottom: 10px;
+    }
+    h1 {        
+        font-size: 24px;
+    }
+    h2 {
+        font-size: 20px;
+    }
+    h3 {
+        font-size: 16px;
+    }
+    p {
+        font-size: 16px;
+    }
+}
+
 .header {
     top: 50px;
+    left: 30px;
+    width: 300px;
 }
 
 .footer {

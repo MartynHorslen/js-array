@@ -11,10 +11,13 @@ $(".overlay").click((e) => {
                 top: "-70px",
                 height: "0"
             }, 1000, () => {
-                $(".search-arrow").removeClass("hidden");
-                $(".grid-container div").each((i, e) => {
-                    $(e).addClass("hover");
-                });
+                if (!$(".full-image").attr("style")){
+                    $(".search-arrow").removeClass("hidden");
+                    $(".grid-container div").each((i, e) => {
+                        $(e).addClass("hover");
+                    });
+                }                
+                
                 animation = false;
             });
         }
@@ -44,9 +47,11 @@ $(".search-arrow").click((e) => {
 /***************************************************/
 let item;
 $(".grid-container div").click((e) => {
-    console.log(e);
     if (animation) return;
     animation = true;
+    // Hide the arrow
+    $(".search-arrow").addClass("hidden");
+
     // Store the positional information of the targeted image.
     item = {
         "top": e.currentTarget.offsetTop - 1,
@@ -55,7 +60,7 @@ $(".grid-container div").click((e) => {
         "height": e.currentTarget.offsetHeight + 2,
         "id": $(e.target).attr("data-num")
     }
-    console.log(item);
+    console.log(gridImages.results[item.id]);
 
     // Overlay an absolutely positioned replica.
     $(".full-image").css({
@@ -78,7 +83,7 @@ $(".grid-container div").click((e) => {
     }, 1000, () => {
         let description = gridImages.results[item.id].description || "Image";
         let name = `by ${gridImages.results[item.id].user.name}` || "";
-        $(".title").html(`<h1>${description} ${name}</h1>`);
+        $(".title").html(`<h2>${description}</h2><h3>${name}</h3>`);
         $(".title").fadeIn("slow");
         $(".footer").fadeIn("slow");
         animation = false;
@@ -86,11 +91,12 @@ $(".grid-container div").click((e) => {
 });
 
 /***************************************************/
-/************* Hide Full Grid Image ****************/
+/*************** Hide Full Image *******************/
 /***************************************************/
 
-$(".full-image").click(async () => {
+$(".full-image").click(async (e) => {
     if (animation) return;
+    if (!$(e.target).hasClass("full-image")) return;
     animation = true;
     $(".title").fadeOut("slow");
     await $(".footer").fadeOut("slow");
@@ -102,18 +108,23 @@ $(".full-image").click(async () => {
         opacity: 0
     }, 1000, () => {
         $(".full-image").removeAttr("style");
+        $(".search-arrow").removeClass("hidden");
         animation = false;
     });
 })
 
+/***************************************************/
+/********** Full Image Button Handlers *************/
+/***************************************************/
 
-// $('#searchBtn').click(async (e)=>{
-//     e.preventDefault(); 
-//     if ($("img").length > 0) {
-//         await retractImage();
-//     }
-//     else {
-//         let image = await getImage(getSearchInput(), getView());
-//         await processImage(image);
-//     }
-// });
+$(".new").click(() => {
+    if (animation) return;
+    animation = true;
+    
+    $(".overlay").animate({
+        top: "0",
+        height: "100vh"
+    }, 1000, () => {     
+        animation = false;
+    })
+});
