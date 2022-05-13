@@ -16,16 +16,42 @@
         <!--[if lt IE 7]>
             <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="#">upgrade your browser</a> to improve your experience.</p>
         <![endif]-->
-        <form>
-            <input type="text" id="search">
-            <button id="searchBtn" value="submit" class="btn">Submit</button>
-        </form>
-        
+        <div class="grid-container">
+            <div class="item xs"></div>
+            <div class="item-row lg"></div>
+            <div class="item-col md"></div>  
+            <div class="item-row md"></div>
+            <div class="item-2-row lg"></div>
+            <div class="item-row lg"></div>
+            <div class="item sm"></div>
+            <div class="item-row lg"></div>
+            <div class="item-col lg"></div>  
+            <div class="item sm"></div>
+            <div class="item-both lg"></div>
+            <div class="item sm"></div>
+            <div class="item md"></div>
+            <div class="item lg"></div>
+        </div>
+
+        <div class="overlay">
+            <div class="rel">
+                <div class="header"><h1>Image Search</h1></div>
+                <form>
+                    <input type="text" id="search">
+                    <button id="searchBtn" value="submit" class="btn">Submit</button>
+                </form>
+                <div class="search-arrow hidden"></div>
+            </div>
+        </div>
+        <div class="full-image"></div>
         <!-- jQuery CDN -->
         <script
   src="https://code.jquery.com/jquery-3.6.0.js"
   integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
   crossorigin="anonymous"></script>
+
+        <!-- Fetching Images -->
+        <script src="js/fetch.js"></script>
 
         <!-- Animations -->
         <script src="js/animation.js"></script>

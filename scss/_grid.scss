@@ -1,0 +1,97 @@
+.grid-container {
+    display: grid;
+    width: 100%;
+    height: 100%; 
+    gap: 5px;
+    grid-template-areas: "item";
+    div {
+        width: 100%;
+        height: 100%;
+    }
+    .item, .item-row, .item-2-row, .item-col, .item-both {
+        display: none;
+        .img { 
+            max-width: 100%; 
+            height: auto;
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+        
+    }
+    .xs {
+        //background-color: green;
+        display: block;
+    }
+}
+
+
+@media (min-width: 576px){
+    .grid-container {
+        grid-template-areas: 
+            "item-1 item-2"
+            "item-3 item-4";
+        .sm {
+            grid-column: span 1;
+            grid-row: span 1;
+            //background-color: red;
+            display: block;
+        }
+    }
+}
+
+@media (min-width: 768px){
+    .grid-container {
+        grid-template-areas: 
+            "item-1 item-2 item-2"
+            "item-3 item-4 item-5"
+            "item-3 item-6 item-7";
+        .md {
+            display: block;
+            //background-color: purple;
+        }
+        .item-row {
+            grid-column: span 1;
+            grid-row: span 2;
+            //background-color: blue;
+        }
+        .item-col {
+            grid-column: span 2;
+            grid-row: span 1;
+            //background-color: red;
+        }
+    }
+}
+
+@media (min-width: 992px){
+    .grid-container {
+        grid-template-areas: none;
+        grid-template-columns: auto auto auto auto auto;
+        grid-template-rows: auto auto auto auto auto;
+        .lg {
+            display: block;
+        }
+        .item {
+            grid-column: span 1;
+            grid-row: span 1;
+            //background-color: green;
+        }
+        
+        .item-2-row {
+            grid-column: span 1;
+            grid-row: span 3;
+            
+            //background-color: purple;
+        }
+        .item-both {
+            grid-column: span 2;
+            grid-row: span 2;
+            
+            //background-color: yellow;
+        }
+    }
+    
+}
+
+@media (min-width: 1200px){
+    
+}
