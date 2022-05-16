@@ -23,11 +23,16 @@ const getImage = async (search, page, num) => {
 
 const getSearchInput = () => {
     if ($('#search').val() === ""){
-        return "office";
+        return "blank";
     } else {
         let query = $('#search').val();
-        $('#search').val("");
-        return query;
+        let regex = /^\w{2,16}/;
+        if (regex.test(query)){
+            $('#search').val("");
+            return query;
+        } else {
+            return "error";
+        }
     }
 };
 
@@ -44,14 +49,27 @@ const updateGridImages = (images) => {
 let gridImages;
 $(document).ready(async ()=>{
     const randNum = Math.random() * 100; 
-    gridImages = await getImage(getSearchInput(), randNum, 14);
+    gridImages = await getImage("office", randNum, 14);
     updateGridImages(gridImages);
 });
 
 let searchImages;
 $("#searchBtn").click(async (e) => {
     e.preventDefault();
-    searchImages = await getImage(getSearchInput(), 1, 30);
-    console.log(searchImages);
-    processSearchResults();
+    let search = getSearchInput();
+    if (search === "error") {
+        $(".error").html('Please enter letters or numbers only into the search field.').removeClass("hidden");
+    } else if (search === "blank") {
+        $(".error").html('Please fill in the search form before submitting.').removeClass("hidden");
+    } else {
+        searchImages = await getImage(search, 1, 30);
+        console.log(searchImages);
+        if(searchImages.total === 0){
+            //No results
+            $(".error").html('No images found. Please search again.').removeClass("hidden");
+        } else {
+            processSearchResults();
+            $(".error").html('').addClass("hidden");
+        }
+    }
 })

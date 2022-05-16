@@ -34,7 +34,7 @@ body {
 }
 
 .search, form {
-    background-color: rgba(0,0,0,0.75);
+    background-color: rgba(0,0,0,0.9);
     padding: 20px 30px;
     width: 100%;
     text-align: center;
@@ -153,4 +153,9 @@ body {
     display: flex;
     flex-direction: row;
     justify-content: space-evenly;
+}
+
+.error {
+    color: red;
+    margin-top: 10px;
 }

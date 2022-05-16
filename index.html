@@ -37,8 +37,9 @@
             <div class="rel">
                 <div class="search"><h1>Image Search</h1></div>
                 <form>
-                    <input type="text" id="search">
+                    <input type="text" id="search" pattern="^\w{2,16}">
                     <button id="searchBtn" value="submit" class="btn">Submit</button>
+                    <p class="error hidden"></p>
                 </form>
                 <div class="search-arrow hidden"></div>
             </div>

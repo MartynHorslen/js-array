@@ -183,11 +183,11 @@ $(".next").click(() => {
 
 const updateItem = (id, search) => {
     if (!search) {
-        if (id > 13) {
+        if (id > gridImages.results.length) {
             id = 0;
         } 
         if (id < 0){
-            id = 13;
+            id = gridImages.results.length;
         }
         item = {
             "top": $(".grid-container div")[id].offsetTop - 1,
@@ -201,11 +201,11 @@ const updateItem = (id, search) => {
             "search": false
         }
     } else {
-        if (id > 29) {
+        if (id > searchImages.results.length) {
             id = 0;
         } 
         if (id < 0){
-            id = 29;
+            id = searchImages.results.length;
         }
         item = {
             "id": id,
@@ -304,3 +304,7 @@ const processSearchResults = () => {
     }
     animation = false;
 }
+
+/***************************************************/
+/************* Save Image To Email *****************/
+/***************************************************/
