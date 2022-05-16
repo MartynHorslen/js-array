@@ -6,22 +6,30 @@ $(".overlay").click((e) => {
     if (animation) return;
     animation = true;
     if ($(e.target).hasClass("overlay")){
+        //If the arrow isn't displayed, it means the overlay is active
         if ($(".search-arrow").hasClass("hidden")){
+            //Slide up the overlay
             $(".overlay").animate({
                 top: "-70px",
                 height: "0"
             }, 1000, () => {
+                //If full image is not open, show the arrow
                 if (!$(".full-image").attr("style")){
                     $(".search-arrow").removeClass("hidden");
                     $(".grid-container div").each((i, e) => {
                         $(e).addClass("hover");
                     });
-                }                
-                
-                animation = false;
+                }
             });
+            // if on full image and overlay (search arrow hidden), must be on new search, so slide up the footer
+            if ($(".full-image").attr("style")){
+                $(".footer").animate({
+                    bottom: "10px"
+                }, 1000)
+            }
         }
     }
+    animation = false;
 })
 
 $(".search-arrow").click((e) => {
@@ -35,7 +43,7 @@ $(".search-arrow").click((e) => {
     })
     
     $(".overlay").animate({
-        top: "0",
+        top: "0px",
         height: "100vh"
     }, 1000, () => {     
         animation = false;
@@ -116,11 +124,14 @@ $(".full-image").click(async (e) => {
 /***************************************************/
 /********** Full Image Button Handlers *************/
 /***************************************************/
-
 $(".new").click(() => {
     if (animation) return;
     animation = true;
     
+    $(".footer").animate({
+        bottom: "-52px"
+    }, 1000)
+
     $(".overlay").animate({
         top: "0",
         height: "100vh"
@@ -128,3 +139,64 @@ $(".new").click(() => {
         animation = false;
     })
 });
+
+$(".prev").click(() => {
+    updateItem(item.id-1);
+    $(".full-image").animate({
+        opacity: "0"
+    }, 1000, () => {
+        $(".full-image").css("background", `url(${item.background}) center center / cover no-repeat`);
+        $(".full-image").animate({
+            opacity: "1"
+        }, 1000)
+    })
+})
+
+$(".next").click(() => {
+    updateItem(item.id+1);
+    $(".full-image").animate({
+        opacity: "0"
+    }, 1000, () => {
+        $(".full-image").css("background", `url(${item.background}) center center / cover no-repeat`);
+        $(".full-image").animate({
+            opacity: "1"
+        }, 1000)
+    })
+})
+
+/***************************************************/
+/********** Update Current Item Object *************/
+/***************************************************/
+
+const updateItem = (id, search) => {
+    if (!search) {
+        if (id > 13) {
+            id = 0;
+        } 
+        if (id < 0){
+            id = 13;
+        }
+        item = {
+            "top": $(".grid-container div")[id].offsetTop - 1,
+            "left": $(".grid-container div")[id].offsetLeft - 1,
+            "width": $(".grid-container div")[id].offsetWidth + 2,
+            "height": $(".grid-container div")[id].offsetHeight + 2,
+            "id": id,
+            "background": gridImages.results[id].urls.regular,
+            "description": gridImages.results[id].description || "Image",
+            "name": `by ${gridImages.results[id].user.name}` || ""
+        }
+    } else {
+        item = {
+            "id": id,
+            "background": gridImages.results[id].urls.regular,
+            "description": gridImages.results[id].description || "Image",
+            "name": `by ${gridImages.results[id].user.name}` || ""
+        }
+    }
+    
+    if (item.height === 2 || search){
+        item.top = window.innerHeight / 2;
+        item.left = window.innerWidth / 2;
+    }
+}

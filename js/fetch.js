@@ -1,8 +1,8 @@
 /***************************************************/
 /****************** Functions **********************/
 /***************************************************/
-const getImage = async (search, page) => {
-    let url = `https://api.unsplash.com/search/photos?page=${page}&query=${search}&per_page=14`
+const getImage = async (search, page, num) => {
+    let url = `https://api.unsplash.com/search/photos?page=${page}&query=${search}&per_page=${num}`
     let res = await fetch(url, {
         headers: {
             "Accept-Version": "v1",
@@ -12,7 +12,7 @@ const getImage = async (search, page) => {
     });
     if (res.status === 403){
         $(".overlay").html('<div class="header"><h2 class="error">There has been too many requests made to the server this hour. Please try again later.</h2></div>');
-        //Placeholder images
+        //Placeholder images?
         //let json = {};
         return;
     } else {
@@ -42,6 +42,12 @@ const updateGridImages = (images) => {
 let gridImages;
 $(document).ready(async ()=>{
     const randNum = Math.random() * 100; 
-    gridImages = await getImage(getSearchInput(), randNum);
+    gridImages = await getImage(getSearchInput(), randNum, 14);
     updateGridImages(gridImages);
 });
+
+let searchImages;
+$("#searchBtn").click(() => {
+    searchImages = await getImage(getSearchInput(), 1, 30);
+    console.log(searchImages);
+})
