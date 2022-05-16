@@ -125,59 +125,6 @@ $(".full-image").click(async (e) => {
 })
 
 /***************************************************/
-/********** Full Image Button Handlers *************/
-/***************************************************/
-$(".new").click(() => {
-    if (animation) return;
-    animation = true;
-    
-    $(".footer").animate({
-        bottom: "-52px"
-    }, 1000)
-
-    $(".overlay").animate({
-        top: "0",
-        height: "100vh"
-    }, 1000, () => {     
-        animation = false;
-    })
-});
-
-$(".prev").click(() => {
-    if (item.search) {
-        updateItem(item.id-1, true);
-    } else {
-        updateItem(item.id-1);
-    }
-    $(".full-image").animate({
-        opacity: "0"
-    }, 1000, () => {
-        $(".full-image").css("background", `url(${item.background}) center center / cover no-repeat`);
-        $(".title").html(`<h2>${item.description.substring(0, 40)}</h2><h3>${item.name}</h3>`);
-        $(".full-image").animate({
-            opacity: "1"
-        }, 1000)
-    })
-})
-
-$(".next").click(() => {
-    if (item.search) {
-        updateItem(item.id+1, true);
-    } else {
-        updateItem(item.id+1);
-    }
-    $(".full-image").animate({
-        opacity: "0"
-    }, 1000, () => {
-        $(".full-image").css("background", `url(${item.background}) center center / cover no-repeat`);
-        $(".title").html(`<h2>${item.description.substring(0, 40)}</h2><h3>${item.name}</h3>`);
-        $(".full-image").animate({
-            opacity: "1"
-        }, 1000)
-    })
-})
-
-/***************************************************/
 /********** Update Current Item Object *************/
 /***************************************************/
 
@@ -223,6 +170,61 @@ const updateItem = (id, search) => {
         item.height = 0;
     }
 }
+
+/***************************************************/
+/********** Full Image Button Handlers *************/
+/***************************************************/
+$(".new").click(() => {
+    if (animation) return;
+    animation = true;
+    
+    $(".footer").animate({
+        bottom: "-71px"
+    }, 1000)
+
+    $(".overlay").animate({
+        top: "0",
+        height: "100vh"
+    }, 1000, () => {     
+        animation = false;
+    })
+});
+
+$(".prev").click(() => {
+    if (item.search) {
+        updateItem(+item.id-1, true);
+    } else {
+        updateItem(+item.id-1);
+    }
+    $(".full-image").animate({
+        opacity: "0"
+    }, 1000, () => {
+        $(".full-image").css("background", `url(${item.background}) center center / cover no-repeat`);
+        $(".title").html(`<h2>${item.description.substring(0, 40)}</h2><h3>${item.name}</h3>`);
+        $(".full-image").animate({
+            opacity: "1"
+        }, 1000)
+    })
+})
+
+$(".next").click(() => {
+    if (item.search) {
+        updateItem(+item.id + 1, true);
+    } else {
+        updateItem((+item.id + 1));
+    }
+    $(".full-image").animate({
+        opacity: "0"
+    }, 1000, () => {
+        $(".full-image").css("background", `url(${item.background}) center center / cover no-repeat`);
+        $(".title").html(`<h2>${item.description.substring(0, 40)}</h2><h3>${item.name}</h3>`);
+        $(".full-image").animate({
+            opacity: "1"
+        }, 1000)
+    })
+})
+
+
 
 /***************************************************/
 /********** Search Results Animations **************/
