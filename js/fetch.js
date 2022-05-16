@@ -25,7 +25,9 @@ const getSearchInput = () => {
     if ($('#search').val() === ""){
         return "office";
     } else {
-        return `${$('#search').val()}`;
+        let query = $('#search').val();
+        $('#search').val("");
+        return query;
     }
 };
 
@@ -47,8 +49,9 @@ $(document).ready(async ()=>{
 });
 
 let searchImages;
-$("#searchBtn").click(async () => {
+$("#searchBtn").click(async (e) => {
     e.preventDefault();
     searchImages = await getImage(getSearchInput(), 1, 30);
     console.log(searchImages);
+    processSearchResults();
 })
