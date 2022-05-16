@@ -153,7 +153,7 @@ $(".prev").click(() => {
         opacity: "0"
     }, 1000, () => {
         $(".full-image").css("background", `url(${item.background}) center center / cover no-repeat`);
-        $(".title").html(`<h2>${item.description}</h2><h3>${item.name}</h3>`);
+        $(".title").html(`<h2>${item.description.substring(0, 40)}</h2><h3>${item.name}</h3>`);
         $(".full-image").animate({
             opacity: "1"
         }, 1000)
@@ -170,7 +170,7 @@ $(".next").click(() => {
         opacity: "0"
     }, 1000, () => {
         $(".full-image").css("background", `url(${item.background}) center center / cover no-repeat`);
-        $(".title").html(`<h2>${item.description}</h2><h3>${item.name}</h3>`);
+        $(".title").html(`<h2>${item.description.substring(0, 40)}</h2><h3>${item.name}</h3>`);
         $(".full-image").animate({
             opacity: "1"
         }, 1000)
@@ -183,11 +183,11 @@ $(".next").click(() => {
 
 const updateItem = (id, search) => {
     if (!search) {
-        if (id > gridImages.results.length) {
+        if (id > gridImages.results.length-1) {
             id = 0;
         } 
         if (id < 0){
-            id = gridImages.results.length;
+            id = gridImages.results.length-1;
         }
         item = {
             "top": $(".grid-container div")[id].offsetTop - 1,
@@ -201,11 +201,11 @@ const updateItem = (id, search) => {
             "search": false
         }
     } else {
-        if (id > searchImages.results.length) {
+        if (id > searchImages.results.length-1) {
             id = 0;
         } 
         if (id < 0){
-            id = searchImages.results.length;
+            id = searchImages.results.length-1;
         }
         item = {
             "id": id,
@@ -267,7 +267,7 @@ const processSearchResults = () => {
                 top: "0",
                 opacity: "1"
             }, 1000, () => {
-                $(".title").html(`<h2>${item.description}</h2><h3>${item.name}</h3>`);
+                $(".title").html(`<h2>${item.description.substring(0, 40)}</h2><h3>${item.name}</h3>`);
                 $(".title").fadeIn("slow");
                 $(".footer").fadeIn("slow");
                 $(".footer").animate({
@@ -297,14 +297,10 @@ const processSearchResults = () => {
             top: "0",
             opacity: "1"
         }, 1000, () => {
-            $(".title").html(`<h2>${item.description}</h2><h3>${item.name}</h3>`);
+            $(".title").html(`<h2>${item.description.substring(0, 40)}</h2><h3>${item.name}</h3>`);
             $(".title").fadeIn("slow");
             $(".footer").fadeIn("slow");
         });
     }
     animation = false;
 }
-
-/***************************************************/
-/************* Save Image To Email *****************/
-/***************************************************/
