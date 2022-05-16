@@ -48,6 +48,7 @@ $(document).ready(async ()=>{
 
 let searchImages;
 $("#searchBtn").click(async () => {
+    e.preventDefault();
     searchImages = await getImage(getSearchInput(), 1, 30);
     console.log(searchImages);
 })
