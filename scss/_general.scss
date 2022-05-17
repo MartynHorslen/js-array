@@ -57,7 +57,7 @@ body {
         width: 0;
         height: 0;
         position: absolute;
-        bottom: -50px;
+        bottom: -80px;
         left: calc(50% - 50px);
     } 
     
@@ -74,13 +74,13 @@ body {
         border-left: 50px solid transparent;
         border-right: 50px solid transparent;
         border-top: 50px solid rgba(0,0,0,0.75);
-        bottom: -48px;
+        bottom: -74px;
     }
     &::before {
         border-left: 50px solid transparent;
         border-right: 50px solid transparent;
         border-top: 50px solid rgba(255,255,255, 0.4);
-        bottom: -50px;
+        bottom: -78px;
     }
 }
 
@@ -231,17 +231,15 @@ body {
 
 .save-close {
     position: absolute;
-    bottom: 20px;
-    left: 50%;
-    transform: translateX(-50%);
+    top: 13px;
+    right: 13px;
     background-color: rgba(255, 255, 255, 0);
     color: white;
     border: 1px solid #fff;
-    border-radius: 5px;
-    font-weight: 500;
-    font-size: 1.063rem;
-    letter-spacing: .4px;
-    padding: 10px 5px;
+    border-radius: 50%;
+    padding: 6px 5px;
+    height: 30px;
+    width: 30px;
     &:hover {
         color: black;
         background-color: white;
