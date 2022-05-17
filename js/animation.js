@@ -4,7 +4,7 @@ let animation = false;
 /***************************************************/
 const hideOverlay = () => {
     $(".overlay").animate({
-        top: "-70px",
+        top: "-90px",
         height: "0"
     }, 1000, () => {
         //If full image is not open, show the arrow
@@ -64,14 +64,15 @@ $(".grid-container div").click((e) => {
     $(".search-arrow").addClass("hidden");
 
     // Store the positional information of the targeted image.
-    item = {
-        "top": e.currentTarget.offsetTop - 1,
-        "left": e.currentTarget.offsetLeft - 1,
-        "width": e.currentTarget.offsetWidth + 2,
-        "height": e.currentTarget.offsetHeight + 2,
-        "id": $(e.target).attr("data-num")
-    }
-    console.log(gridImages.results[item.id]);
+    // item = {
+    //     "top": e.currentTarget.offsetTop - 1,
+    //     "left": e.currentTarget.offsetLeft - 1,
+    //     "width": e.currentTarget.offsetWidth + 2,
+    //     "height": e.currentTarget.offsetHeight + 2,
+    //     "id": $(e.target).attr("data-num")
+    // }
+    // console.log(gridImages.results[item.id]);
+    updateItem($(e.target).attr("data-num"));
 
     // Overlay an absolutely positioned replica.
     $(".full-image").css({
@@ -104,24 +105,34 @@ $(".grid-container div").click((e) => {
 /***************************************************/
 /*************** Hide Full Image *******************/
 /***************************************************/
-
-$(".full-image").click(async (e) => {
+const hideFullImage = async(e) => {
     if (animation) return;
-    if (!$(e.target).hasClass("full-image")) return;
-    animation = true;
-    $(".title").fadeOut("slow");
-    await $(".footer").fadeOut("slow");
-    $(".full-image").animate({
-        top: item.top,
-        left: item.left,
-        width: item.width,
-        height: item.height,
-        opacity: 0
-    }, 1000, () => {
-        $(".full-image").removeAttr("style");
-        $(".search-arrow").removeClass("hidden");
-        animation = false;
-    });
+    if ($(e.target).hasClass("full-image") || e === "close") {
+        animation = true;
+        $(".title").fadeOut("slow");
+        await $(".footer").fadeOut("slow");
+        $(".full-image").animate({
+            top: item.top,
+            left: item.left,
+            width: item.width,
+            height: item.height,
+            opacity: 0
+        }, 1000, () => {
+            $(".full-image").removeAttr("style");
+            $(".search-arrow").removeClass("hidden");
+            animation = false;
+        });
+    }
+    
+}
+$(".full-image").click((e) => {
+    //if save image overlay is active, don't allow the full image to hide.
+    if (!$(".save-overlay").attr("style")){
+       hideFullImage(e); 
+    }    
+})
+$(".close").click(() => {
+    hideFullImage("close");
 })
 
 /***************************************************/
@@ -143,6 +154,7 @@ const updateItem = (id, search) => {
             "height": $(".grid-container div")[id].offsetHeight + 2,
             "id": id,
             "background": gridImages.results[id].urls.regular,
+            "thumb": gridImages.results[id].urls.thumb,
             "description": gridImages.results[id].description || "Image",
             "name": `by ${gridImages.results[id].user.name}` || "",
             "search": false
@@ -157,6 +169,7 @@ const updateItem = (id, search) => {
         item = {
             "id": id,
             "background": searchImages.results[id].urls.regular,
+            "thumb": searchImages.results[id].urls.thumb,
             "description": searchImages.results[id].description || "Image",
             "name": `by ${searchImages.results[id].user.name}` || "",
             "search": true
@@ -200,7 +213,7 @@ $(".prev").click(() => {
         opacity: "0"
     }, 1000, () => {
         $(".full-image").css("background", `url(${item.background}) center center / cover no-repeat`);
-        $(".title").html(`<h2>${item.description.substring(0, 40)}</h2><h3>${item.name}</h3>`);
+        $(".title").html(`<h2>${item.description.substring(0, 80)}</h2><h3>${item.name}</h3>`);
         $(".full-image").animate({
             opacity: "1"
         }, 1000)
@@ -217,7 +230,7 @@ $(".next").click(() => {
         opacity: "0"
     }, 1000, () => {
         $(".full-image").css("background", `url(${item.background}) center center / cover no-repeat`);
-        $(".title").html(`<h2>${item.description.substring(0, 40)}</h2><h3>${item.name}</h3>`);
+        $(".title").html(`<h2>${item.description.substring(0, 100)}</h2><h3>${item.name}</h3>`);
         $(".full-image").animate({
             opacity: "1"
         }, 1000)
@@ -269,7 +282,7 @@ const processSearchResults = () => {
                 top: "0",
                 opacity: "1"
             }, 1000, () => {
-                $(".title").html(`<h2>${item.description.substring(0, 40)}</h2><h3>${item.name}</h3>`);
+                $(".title").html(`<h2>${item.description.substring(0, 100)}</h2><h3>${item.name}</h3>`);
                 $(".title").fadeIn("slow");
                 $(".footer").fadeIn("slow");
                 $(".footer").animate({
@@ -299,7 +312,7 @@ const processSearchResults = () => {
             top: "0",
             opacity: "1"
         }, 1000, () => {
-            $(".title").html(`<h2>${item.description.substring(0, 40)}</h2><h3>${item.name}</h3>`);
+            $(".title").html(`<h2>${item.description.substring(0, 100)}</h2><h3>${item.name}</h3>`);
             $(".title").fadeIn("slow");
             $(".footer").fadeIn("slow");
         });

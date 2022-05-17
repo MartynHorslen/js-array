@@ -35,10 +35,14 @@
 
         <div class="overlay">
             <div class="rel">
-                <div class="search"><h1>Image Search</h1></div>
-                <form>
+                <div class="search">
+                    <h1>Image Search</h1>
+                    <p>Search for images on a specific topic or select an image from the grid.</p>
+                </div>
+                <form class="search-form">
                     <input type="text" id="search" pattern="^\w{2,16}">
-                    <button id="searchBtn" value="submit" class="btn">Submit</button>
+                    <button id="searchBtn" value="submit" class="btn">Search</button>
+                    <button id="savedBtn" value="submit" class="btn">Saved Images</button>
                     <p class="error hidden"></p>
                 </form>
                 <div class="search-arrow hidden"></div>
@@ -50,10 +54,31 @@
                 <div class="buttons">
                     <button class="prev">Previous</button>
                     <button class="save">Save</button>
+                    <button class="close">Close</button>
                     <button class="new">New Search</button>
                     <button class="next">Next</button> 
                 </div>
             </div>
+        </div>
+        <div class="save-overlay hidden">
+            <div class="save-image">
+                <h2>Save Image...</h2>
+                <div class="flex">
+                    <div class="img"></div>
+                    <div class="info"></div>
+                    <div class="email">
+                        <form class="email-form">
+                            <input type="email" id="save-email" placeholder="Email address" />
+                            <button class="store">Save</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="stored-images">
+                <h2>Stored Images</h2>
+                
+            </div>
+            <button class="save-close">Close</button>
         </div>
         <!-- jQuery CDN -->
         <script
@@ -66,5 +91,8 @@
 
         <!-- Animations -->
         <script src="js/animation.js"></script>
+
+        <!-- Store Images -->
+        <script src="js/store.js"></script>
     </body>
 </html>
