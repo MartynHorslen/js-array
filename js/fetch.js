@@ -12,8 +12,6 @@ const getImage = async (search, page, num) => {
     });
     if (res.status === 403){
         $(".overlay").html('<div class="header"><h2 class="error">There has been too many requests made to the server this hour. Please try again later.</h2></div>');
-        //Placeholder images?
-        //let json = {};
         return;
     } else {
         let json = await res.json();
@@ -63,7 +61,6 @@ $("#searchBtn").click(async (e) => {
         $(".error").html('Please fill in the search form before submitting.').removeClass("hidden");
     } else {
         searchImages = await getImage(search, 1, 30);
-        console.log(searchImages);
         if(searchImages.total === 0){
             //No results
             $(".error").html('No images found. Please search again.').removeClass("hidden");

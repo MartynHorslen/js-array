@@ -11,8 +11,7 @@ $(".save").click(() => {
     $(".footer").animate({
         bottom: "-71px"
     }, 1000, () => {
-        let index = storedImages.findIndex(x => x.id === item.id);
-        console.log(index);
+        let index = storedImages.findIndex(x => x.unique === item.unique);
         if (index === -1) {
             $('.save-image').fadeIn("slow");
             
@@ -26,23 +25,19 @@ $(".save").click(() => {
         // Load previous saves
         $(".stored-images").html("");
         $(storedImages).each((index, element) => {
-            console.log(element);
             $(".stored-images").append(`<div class="flex"><div class="img img-${index}"></div><div class="info">${element.description.substring(0, 50)} - ${element.name}</div><div class="email">${element.email}</div></div>`);
-            console.log(index);
             $(`.stored-images .img-${index}`).css("background", `url(${element.thumb}) center center / cover no-repeat`);
         });
         
-        // Show close button.
-
+        animation = false;
     })
-    animation = false;
 })
 
 $('.email button').click((e)=>{
     e.preventDefault();
     item.email = $("#save-email").val();
+    $("#save-email").val("");
     storedImages.push(item);
-    console.log(storedImages);  
     $('.save-image').fadeOut("slow");
     let storeId = storedImages.length - 1;
     $(".stored-images").append(`<div class="flex"><div class="img img-${storeId}"></div><div class="info">${item.description.substring(0, 50)} - ${item.name}</div><div class="email">${item.email}</div></div>`);
@@ -57,8 +52,10 @@ $(".save-close").click(() => {
         $(".header").fadeIn("slow");
         $(".footer").animate({
             bottom: "10px"
-        }, 1000)
-        $(".save-overlay").attr("style", "");
+        }, 1000, () => {
+            animation = false;
+        })
+        $(".save-overlay").removeAttr("style");
     })
     animation = false;
 })

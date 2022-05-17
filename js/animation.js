@@ -62,16 +62,7 @@ $(".grid-container div").click((e) => {
     animation = true;
     // Hide the arrow
     $(".search-arrow").addClass("hidden");
-
-    // Store the positional information of the targeted image.
-    // item = {
-    //     "top": e.currentTarget.offsetTop - 1,
-    //     "left": e.currentTarget.offsetLeft - 1,
-    //     "width": e.currentTarget.offsetWidth + 2,
-    //     "height": e.currentTarget.offsetHeight + 2,
-    //     "id": $(e.target).attr("data-num")
-    // }
-    // console.log(gridImages.results[item.id]);
+    
     updateItem($(e.target).attr("data-num"));
 
     // Overlay an absolutely positioned replica.
@@ -106,9 +97,8 @@ $(".grid-container div").click((e) => {
 /*************** Hide Full Image *******************/
 /***************************************************/
 const hideFullImage = async(e) => {
-    if (animation) return;
     if ($(e.target).hasClass("full-image") || e === "close") {
-        animation = true;
+        
         $(".title").fadeOut("slow");
         await $(".footer").fadeOut("slow");
         $(".full-image").animate({
@@ -119,19 +109,36 @@ const hideFullImage = async(e) => {
             opacity: 0
         }, 1000, () => {
             $(".full-image").removeAttr("style");
-            $(".search-arrow").removeClass("hidden");
-            animation = false;
+            if (item.search) {
+                $(".grid-container div").each((i, e) => {
+                    $(e).removeClass("hover");
+                })
+                
+                $(".overlay").animate({
+                    top: "0px",
+                    height: "100vh"
+                }, 1000, () => {    
+                    animation = false;
+                })
+            } else {
+                $(".search-arrow").removeClass("hidden");
+                animation = false; 
+            }
         });
     }
-    
 }
 $(".full-image").click((e) => {
+    if (animation) return;
+    animation = true;
     //if save image overlay is active, don't allow the full image to hide.
     if (!$(".save-overlay").attr("style")){
        hideFullImage(e); 
-    }    
+    }
 })
+
 $(".close").click(() => {
+    if (animation) return;
+    animation = true;
     hideFullImage("close");
 })
 
@@ -152,7 +159,8 @@ const updateItem = (id, search) => {
             "left": $(".grid-container div")[id].offsetLeft - 1,
             "width": $(".grid-container div")[id].offsetWidth + 2,
             "height": $(".grid-container div")[id].offsetHeight + 2,
-            "id": id,
+            "id": +id,
+            "unique": gridImages.results[id]["id"],
             "background": gridImages.results[id].urls.regular,
             "thumb": gridImages.results[id].urls.thumb,
             "description": gridImages.results[id].description || "Image",
@@ -167,7 +175,8 @@ const updateItem = (id, search) => {
             id = searchImages.results.length-1;
         }
         item = {
-            "id": id,
+            "id": +id,
+            "unique": searchImages.results[id]["id"],
             "background": searchImages.results[id].urls.regular,
             "thumb": searchImages.results[id].urls.thumb,
             "description": searchImages.results[id].description || "Image",
@@ -204,6 +213,8 @@ $(".new").click(() => {
 });
 
 $(".prev").click(() => {
+    if (animation) return;
+    animation = true;
     if (item.search) {
         updateItem(+item.id-1, true);
     } else {
@@ -216,11 +227,15 @@ $(".prev").click(() => {
         $(".title").html(`<h2>${item.description.substring(0, 80)}</h2><h3>${item.name}</h3>`);
         $(".full-image").animate({
             opacity: "1"
-        }, 1000)
+        }, 1000, () => {
+            animation = false;
+        })
     })
 })
 
 $(".next").click(() => {
+    if (animation) return;
+    animation = true;
     if (item.search) {
         updateItem(+item.id + 1, true);
     } else {
@@ -233,7 +248,9 @@ $(".next").click(() => {
         $(".title").html(`<h2>${item.description.substring(0, 100)}</h2><h3>${item.name}</h3>`);
         $(".full-image").animate({
             opacity: "1"
-        }, 1000)
+        }, 1000, () => {
+            animation = false;
+        })
     })
 })
 
@@ -287,7 +304,9 @@ const processSearchResults = () => {
                 $(".footer").fadeIn("slow");
                 $(".footer").animate({
                     bottom: "10px"
-                }, 1000)
+                }, 1000, () => {
+                    animation = false;
+                })
             });
         });
     } else {
@@ -315,6 +334,7 @@ const processSearchResults = () => {
             $(".title").html(`<h2>${item.description.substring(0, 100)}</h2><h3>${item.name}</h3>`);
             $(".title").fadeIn("slow");
             $(".footer").fadeIn("slow");
+            animation = false;
         });
     }
     animation = false;
