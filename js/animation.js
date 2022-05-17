@@ -199,7 +199,7 @@ const updateItem = (id, search) => {
 $(".new").click(() => {
     if (animation) return;
     animation = true;
-    
+    $(".header").fadeOut("slow");
     $(".footer").animate({
         bottom: "-71px"
     }, 1000)
