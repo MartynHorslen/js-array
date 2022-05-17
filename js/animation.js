@@ -26,6 +26,7 @@ $(".overlay").click((e) => {
             hideOverlay();
             // if on full image and overlay (search arrow hidden), must be on new search, so slide up the footer
             if ($(".full-image").attr("style")){
+                $(".header").fadeIn("slow");
                 $(".footer").animate({
                     bottom: "10px"
                 }, 1000)
