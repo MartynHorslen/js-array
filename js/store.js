@@ -23,15 +23,28 @@ $(".save").click(() => {
 
         // Load previous saves
         $(".stored-images").html("");
-        $(storedImages).each((index, element) => {
-            $(".stored-images").append(`<div class="flex"data-val="${element.unique}"><div class="img img-${index}"></div><div class="info">${element.description.substring(0, 50)} - ${element.name}</div><div class="email">${element.email}</div><div class="delete">X</div></div>`);
-            $(`.stored-images .img-${index}`).css("background", `url(${element.thumb}) center center / cover no-repeat`);
-        });
+        for (let i = 0; i < Object.keys(storedEmail).length; i++){
+            let key = Object.keys(storedEmail)[i];
+            let index = 0;
+            
+            if (storedEmail[key].length === 0){
+                continue;
+            }
+            $(".stored-images").append(`<div class="group group-${i}"><h3>${Object.keys(storedEmail)[i]}</h3>`);
+
+            for (let j = 0; j < storedEmail[key].length; j++){
+                let element = storedEmail[key][j];
+                $(`.group-${i}`).append(`<div class="flex" data-val="${element.unique}"><div class="img img-${index}"></div><div class="info">${element.description.substring(0, 50)} - ${element.name}</div><div class="delete">X</div></div>`);
+                $(`.group-${i} .img-${index}`).css("background", `url(${element.thumb}) center center / cover no-repeat`);
+                index++;
+            }
+            $(".stored-images").append("</div>");
+        }
         
         animation = false;
     })
 })
-
+const storedEmail = [];
 $('.email button').click((e)=>{
     e.preventDefault();
     if (animation) return;
@@ -40,6 +53,11 @@ $('.email button').click((e)=>{
     let regex = /[a-z0-9!#$%&'*+\/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+\/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.?)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/;
     if (regex.test(email)){
         item.email = email;
+        if (storedEmail[email]){
+            storedEmail[email].push(item);
+        } else {
+            storedEmail[email] = [item];
+        }
     } else {
         animation = false;
         return alert("Email not valid. Please try again.");
@@ -68,13 +86,7 @@ $('.email button').click((e)=>{
                 })
             })
         })
-    });
-    // let storeId = storedImages.length - 1;
-    // $(".stored-images").append(`<div class="flex" data-val="${item.unique}"><div class="img img-${storeId}"></div><div class="info">${item.description.substring(0, 50)} - ${item.name}</div><div class="email">${item.email}</div><div class="delete">X</div></div>`);
-    
-    // $(`.stored-images .img-${storeId}`).css("background", `url(${item.thumb}) center center / cover no-repeat`); 
-
-    
+    });    
     animation = false;
 })
 
@@ -115,19 +127,37 @@ $("#savedBtn").click(async e => {
 
         // Load previous saves
         $(".stored-images").html("");
-        $(storedImages).each((index, element) => {
-            $(".stored-images").append(`<div class="flex" data-val="${element.unique}"><div class="img img-${index}"></div><div class="info">${element.description.substring(0, 50)} - ${element.name}</div><div class="email">${element.email}</div><div class="delete">X</div></div>`);
-            $(`.stored-images .img-${index}`).css("background", `url(${element.thumb}) center center / cover no-repeat`);
-        });
+        
+        for (let i = 0; i < Object.keys(storedEmail).length; i++){
+            let key = Object.keys(storedEmail)[i];
+            let index = 0;
+            if (storedEmail[key].length === 0){
+                continue;
+            }
+            $(".stored-images").append(`<div class="group group-${i}"><h3>${Object.keys(storedEmail)[i]}</h3>`);
+
+            for (let j = 0; j < storedEmail[key].length; j++){
+                let element = storedEmail[key][j];
+                $(`.group-${i}`).append(`<div class="flex" data-val="${element.unique}"><div class="img img-${index}"></div><div class="info">${element.description.substring(0, 50)} - ${element.name}</div><div class="delete">X</div></div>`);
+                $(`.group-${i} .img-${index}`).css("background", `url(${element.thumb}) center center / cover no-repeat`);
+                index++;
+            }
+            $(".stored-images").append("</div>");
+        }
     });
 })
 
 $(".stored-images").click((e) => {
     if ($(e.target).hasClass("delete")){
-        $(e.target).parent().remove();
-        let index = storedImages.findIndex(x => x.unique === $(e.target).parent().attr("data-val"));
+        let uni = $(e.target).parent().attr("data-val");
+        let email = $(e.target).parent().prevAll("h3").text();
+        const index = storedEmail[email].findIndex(x => x.unique === uni);
         if (index !== -1){
-            storedImages.splice(index, 1);
+            storedEmail[email].splice(index, 1);
         }
+        if (storedEmail[email].length === 0){
+            $(e.target).parent().prevAll("h3").remove();
+        }
+        $(e.target).parent().remove();
     }
 })
