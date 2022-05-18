@@ -46,11 +46,35 @@ $('.email button').click((e)=>{
     }
     $("#save-email").val("");
     storedImages.push(item);
-    $('.save-image').fadeOut("slow");
-    let storeId = storedImages.length - 1;
-    $(".stored-images").append(`<div class="flex" data-val="${item.unique}"><div class="img img-${storeId}"></div><div class="info">${item.description.substring(0, 50)} - ${item.name}</div><div class="email">${item.email}</div><div class="delete">X</div></div>`);
+    $('.save-overlay').fadeOut("slow", () => {
+        if (item.search) {
+            updateItem(+item.id + 1, true);
+        } else {
+            updateItem((+item.id + 1));
+        }
+        $(".full-image").animate({
+            opacity: "0"
+        }, 1000, () => {
+            $(".full-image").css("background", `url(${item.background}) center center / cover no-repeat`);
+            $(".title").html(`<h2>${item.description.substring(0, 100)}</h2><h3>${item.name}</h3>`);
+            $(".full-image").animate({
+                opacity: "1"
+            }, 1000, () => {
+                $(".header").fadeIn("slow");
+                $(".footer").animate({
+                    bottom: "10px"
+                }, 1000, () => {
+                    animation = false;
+                })
+            })
+        })
+    });
+    // let storeId = storedImages.length - 1;
+    // $(".stored-images").append(`<div class="flex" data-val="${item.unique}"><div class="img img-${storeId}"></div><div class="info">${item.description.substring(0, 50)} - ${item.name}</div><div class="email">${item.email}</div><div class="delete">X</div></div>`);
     
-    $(`.stored-images .img-${storeId}`).css("background", `url(${item.thumb}) center center / cover no-repeat`); 
+    // $(`.stored-images .img-${storeId}`).css("background", `url(${item.thumb}) center center / cover no-repeat`); 
+
+    
     animation = false;
 })
 

@@ -81,6 +81,15 @@ body {
         text-align: center;
         margin-top: 20px;
     }
+
+    #savedBtn, #searchBtn {
+        &:hover {
+            color: black;
+            background: white;
+            outline-offset: 0px;
+            outline: 6px solid white;
+        }
+    }
 }
 #savedBtn {
     margin-top: 10px;
@@ -105,9 +114,14 @@ body {
         outline-offset: 5px;
         color: white;
         border-radius: 0 5px 5px 0;
-        
         text-align: center;
-        //margin-right: 15px;
+        min-width: 40px;
+        &:hover {
+            color: black;
+            background: white;
+            outline-offset: 0px;
+            outline: 6px solid white;
+        }
     }
 }
 .search-arrow {
@@ -322,6 +336,9 @@ body {
         outline-offset: 5px;
     }
 }
+.grid-text {
+    display: none;
+}
 @media (min-width: 234px){
     .search-arrow {
         &::after {
@@ -423,6 +440,9 @@ body {
                 height: 90px;
             }
         }
+    }
+    .grid-text {
+        display: inline;
     }
 }
 @media (min-width: 584px){
