@@ -4,7 +4,7 @@ let animation = false;
 /***************************************************/
 const hideOverlay = () => {
     $(".overlay").animate({
-        top: "-90px",
+        top: "-127px",
         height: "0"
     }, 1000, () => {
         //If full image is not open, show the arrow
@@ -122,9 +122,9 @@ const hideFullImage = async(e) => {
                     animation = false;
                 })
             } else {
-                $(".search-arrow").removeClass("hidden");
-                animation = false; 
+                $(".search-arrow").removeClass("hidden"); 
             }
+            animation = false;
         });
     }
 }
@@ -132,8 +132,10 @@ $(".full-image").click((e) => {
     if (animation) return;
     animation = true;
     //if save image overlay is active, don't allow the full image to hide.
-    if (!$(".save-overlay").attr("style")){
+    if (!$(".save-overlay").attr("style") && $(e.target).hasClass("full-image")){
        hideFullImage(e); 
+    } else {
+        animation = false;
     }
 })
 

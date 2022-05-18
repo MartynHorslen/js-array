@@ -24,7 +24,7 @@ $(".save").click(() => {
         // Load previous saves
         $(".stored-images").html("");
         $(storedImages).each((index, element) => {
-            $(".stored-images").append(`<div class="flex"><div class="img img-${index}"></div><div class="info">${element.description.substring(0, 50)} - ${element.name}</div><div class="email">${element.email}</div></div>`);
+            $(".stored-images").append(`<div class="flex"data-val="${element.unique}"><div class="img img-${index}"></div><div class="info">${element.description.substring(0, 50)} - ${element.name}</div><div class="email">${element.email}</div><div class="delete">X</div></div>`);
             $(`.stored-images .img-${index}`).css("background", `url(${element.thumb}) center center / cover no-repeat`);
         });
         
@@ -34,14 +34,17 @@ $(".save").click(() => {
 
 $('.email button').click((e)=>{
     e.preventDefault();
+    if (animation) return;
+    animation = true;
     item.email = $("#save-email").val();
     $("#save-email").val("");
     storedImages.push(item);
     $('.save-image').fadeOut("slow");
     let storeId = storedImages.length - 1;
-    $(".stored-images").append(`<div class="flex"><div class="img img-${storeId}"></div><div class="info">${item.description.substring(0, 50)} - ${item.name}</div><div class="email">${item.email}</div></div>`);
+    $(".stored-images").append(`<div class="flex" data-val="${item.unique}"><div class="img img-${storeId}"></div><div class="info">${item.description.substring(0, 50)} - ${item.name}</div><div class="email">${item.email}</div><div class="delete">X</div></div>`);
     
     $(`.stored-images .img-${storeId}`).css("background", `url(${item.thumb}) center center / cover no-repeat`); 
+    animation = false;
 })
 
 $(".save-close").click(() => {
@@ -66,12 +69,10 @@ $(".save-close").click(() => {
         }
         $(".save-overlay").removeAttr("style");
     })
-    animation = false;
 })
 
 $("#savedBtn").click(async e => {
     e.preventDefault();
-    console.log("Saved");
 
     $(".overlay").animate({
         top: "-90px",
@@ -84,8 +85,18 @@ $("#savedBtn").click(async e => {
         // Load previous saves
         $(".stored-images").html("");
         $(storedImages).each((index, element) => {
-            $(".stored-images").append(`<div class="flex"><div class="img img-${index}"></div><div class="info">${element.description.substring(0, 50)} - ${element.name}</div><div class="email">${element.email}</div></div>`);
+            $(".stored-images").append(`<div class="flex" data-val="${element.unique}"><div class="img img-${index}"></div><div class="info">${element.description.substring(0, 50)} - ${element.name}</div><div class="email">${element.email}</div><div class="delete">X</div></div>`);
             $(`.stored-images .img-${index}`).css("background", `url(${element.thumb}) center center / cover no-repeat`);
         });
     });
+})
+
+$(".stored-images").click((e) => {
+    if ($(e.target).hasClass("delete")){
+        $(e.target).parent().remove();
+        let index = storedImages.findIndex(x => x.unique === $(e.target).parent().attr("data-val"));
+        if (index !== -1){
+            storedImages.splice(index, 1);
+        }
+    }
 })
