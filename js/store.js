@@ -36,7 +36,14 @@ $('.email button').click((e)=>{
     e.preventDefault();
     if (animation) return;
     animation = true;
-    item.email = $("#save-email").val();
+    let email = $("#save-email").val();
+    let regex = /[a-z0-9!#$%&'*+\/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+\/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.?)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/;
+    if (regex.test(email)){
+        item.email = email;
+    } else {
+        animation = false;
+        return alert("Email not valid. Please try again.");
+    }
     $("#save-email").val("");
     storedImages.push(item);
     $('.save-image').fadeOut("slow");
