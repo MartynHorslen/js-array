@@ -69,9 +69,6 @@ body {
         color: white;
         border-radius: 0 5px 5px 0;
         text-align: center;
-        @-moz-document url-prefix() {
-            line-height: 18px;
-        }
     }
     
 
@@ -354,6 +351,13 @@ body {
     border-top: 1px solid grey;
     margin-top: 10px;
 }
+
+@-moz-document url-prefix() {
+    .search #searchBtn, .search-form #searchBtn {
+        line-height: 18px;
+    }
+}
+
 @media (min-width: 234px){
     .search-arrow {
         &::after {
