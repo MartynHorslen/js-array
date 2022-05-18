@@ -69,7 +69,11 @@ body {
         color: white;
         border-radius: 0 5px 5px 0;
         text-align: center;
+        @-moz-document url-prefix() {
+            line-height: 18px;
+        }
     }
+    
 
     #savedBtn {
         background-color: transparent;
