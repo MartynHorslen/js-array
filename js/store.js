@@ -80,7 +80,7 @@ $('.email button').click((e)=>{
             }, 1000, () => {
                 $(".header").fadeIn("slow");
                 $(".footer").animate({
-                    bottom: "10px"
+                    bottom: "60px"
                 }, 1000, () => {
                     animation = false;
                 })
@@ -97,7 +97,7 @@ $(".save-close").click(() => {
         if ($(".full-image").attr("style")){
             $(".header").fadeIn("slow");
             $(".footer").animate({
-                bottom: "10px"
+                bottom: "60px"
             }, 1000, () => {
                 animation = false;
             })

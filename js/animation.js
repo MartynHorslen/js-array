@@ -28,7 +28,7 @@ $(".overlay").click((e) => {
             if ($(".full-image").attr("style")){
                 $(".header").fadeIn("slow");
                 $(".footer").animate({
-                    bottom: "10px"
+                    bottom: "60px"
                 }, 1000)
             }
         }
@@ -306,7 +306,7 @@ const processSearchResults = () => {
                 $(".title").fadeIn("slow");
                 $(".footer").fadeIn("slow");
                 $(".footer").animate({
-                    bottom: "10px"
+                    bottom: "60px"
                 }, 1000, () => {
                     animation = false;
                 })
